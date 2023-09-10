@@ -1,2 +1,2 @@
 # FortifyCI with Jira Intrgation
-A unified script for all CIs with Jira Integration. 
+A unified script that Integrate Fortify SAST with remote scanning for all CIs with Jira Integration. 
