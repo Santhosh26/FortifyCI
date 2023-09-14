@@ -1,8 +1,7 @@
 # FortifyCI with Jira Intrgation
 A unified script that Integrate Fortify SAST with remote scanning for all CIs with Jira Integration. 
 
-##Prerequisites
-
+**Prerequisites**
 1. Install Scancentral client and export to the environment path
 2. Install FCLI and export to the environment path 
 3. Install FortifyBugtrackerutility 
