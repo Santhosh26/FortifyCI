@@ -32,27 +32,27 @@ low_issues_limit = int(config('LOW_ISSUES_LIMIT'))
 # Start by creating the package
 try:
 
-    subprocess.run([scancentral_path, "package", "-bt", build_tool, "-o", code_package], check=True)
+    subprocess.run([scancentral_path, "package", "-bt", build_tool, "-o", code_package], shell=True, check=True)
 except subprocess.CalledProcessError:
     print("Package creation failed using Scancentral")
     exit(1)
 
 # Login to SSC
 try:
-    subprocess.run([fcli_path, "ssc", "session", "login", "--url", ssc_url, "-t", ssc_token], check=True)
+    subprocess.run([fcli_path, "ssc", "session", "login", "--url", ssc_url, "-t", ssc_token], shell=True, check=True)
 except subprocess.CalledProcessError:
     print("Failed to login to SSC using FCLI")
     exit(1)    
 # Login to SC-SAST
 try:
-    subprocess.run([fcli_path, "sc-sast", "session", "login", "--ssc-url", ssc_url, "-c", ssc_sast_secret, "-t", ssc_token], check=True)
+    subprocess.run([fcli_path, "sc-sast", "session", "login", "--ssc-url", ssc_url, "-c", ssc_sast_secret, "-t", ssc_token], shell=True, check=True)
 except subprocess.CalledProcessError:
     print("Failed to login to Scancentral SAST using FCLI")
     exit(1)  
 # Upload the Package and retrieve the job token
 try:
 
-    job_output = subprocess.check_output([fcli_path, "sc-sast", "scan", "start", "--upload", "--appversion", ssc_appversion_id, "-p", code_package, "--sensor-version", sensor_version]).decode()
+    job_output = subprocess.check_output([fcli_path, "sc-sast", "scan", "start", "--upload", "--appversion", ssc_appversion_id, "-p", code_package, "--sensor-version", sensor_version], shell=True).decode()
 except subprocess.CalledProcessError:
     print("Failed to start a SAST scan using FCLI")
     exit(1)  
@@ -65,7 +65,7 @@ print("Fortify Scan Job Token:"+job_token)
 #job_token= "381b4724-01de-45b2-878c-17774bd22ee6"
 while True:
     # Check the status of the job
-    scan_status_output = subprocess.check_output([fcli_path, "sc-sast", "scan", "status", job_token]).decode()
+    scan_status_output = subprocess.check_output([fcli_path, "sc-sast", "scan", "status", job_token], shell=True).decode()
    
     # Extract statuses using regex
     lines = scan_status_output.strip().split("\n")
@@ -98,7 +98,7 @@ time.sleep(30)
 
 try:
 
-    subprocess.run(["java", "-jar",fortify_bug_utility_path, "-configFile", fortify_bug_config_file, "-SSCBaseUrl", ssc_url, "-SSCUserName", ssc_username, "-SSCPassword", ssc_password, "-SSCApplicationVersionNamePatterns", f"{ssc_appname}:{ssc_appversion_name}", "-JiraBaseUrl", jira_url, "-JiraUserName", jira_username, "-JiraPassword", jira_password, "-JiraProjectKey", jira_project_key], check=True)
+    subprocess.run(["java", "-jar",fortify_bug_utility_path, "-configFile", fortify_bug_config_file, "-SSCBaseUrl", ssc_url, "-SSCUserName", ssc_username, "-SSCPassword", ssc_password, "-SSCApplicationVersionNamePatterns", f"{ssc_appname}:{ssc_appversion_name}", "-JiraBaseUrl", jira_url, "-JiraUserName", jira_username, "-JiraPassword", jira_password, "-JiraProjectKey", jira_project_key], shell=True, check=True)
 except subprocess.CalledProcessError:
     print("Failed to execute jira integration with SSC")
     exit(1) 
@@ -106,7 +106,7 @@ except subprocess.CalledProcessError:
 print("Issues have been updated to Jira Bugtracker")
 
 # Query the application using FCLI
-app_query = subprocess.check_output([fcli_path, "ssc", "appversion-vuln", "count", "--appversion", ssc_appversion_id]).decode()
+app_query = subprocess.check_output([fcli_path, "ssc", "appversion-vuln", "count", "--appversion", ssc_appversion_id], shell=True).decode()
 
 # Extract issues count for each severity
 critical_issues_count_search = re.search(r"Critical\s+(\d+)", app_query)
