@@ -30,7 +30,7 @@ low_issues_limit = int(config('LOW_ISSUES_LIMIT'))
 # Start by creating the package
 try:
 
-    subprocess.run(["scancentral.bat", "package", "-bt", build_tool, "-o", code_package], check=True)
+    subprocess.run(["scancentral", "package", "-bt", build_tool, "-o", code_package], check=True)
 except subprocess.CalledProcessError:
     print("Package creation failed using Scancentral")
     exit(1)
