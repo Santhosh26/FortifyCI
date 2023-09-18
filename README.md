@@ -44,8 +44,6 @@ Before you can run the script, ensure you have the following prerequisites set u
 **Configuration**
 Create a .env file in the same directory as your script.
 Add all necessary configurations to the .env file. For example:
-makefile
-Copy code
 SSC_URL=your_ssc_url
 SSC_TOKEN=your_ssc_token
 ...
@@ -53,21 +51,20 @@ SSC_TOKEN=your_ssc_token
 **Running the Script**
 Navigate to the directory containing the script.
 Run the script using Python:
-bash
-Copy code
+
 python your_script_name.py
 
 **Understanding the Script**
-The script performs the following steps:
-Fetches configuration values from the .env file.
-Creates a package using Scancentral.
-Logs in to SSC and SC-SAST.
-Starts a SAST scan using FCLI and retrieves the job token.
-Monitors the scan status until completion.
-Waits for Fortify SSC to process the scan results.
-Uploads issues to Jira.
-Queries the application using FCLI to get the count of issues based on severity.
-Check the issue counts against predefined limits to determine if the build obtains security clearance.
+_The script performs the following steps:_
+1. Fetches configuration values from the .env file.
+2. Creates a package using Scancentral.
+3. Logs in to SSC and SC-SAST.
+4. Starts a SAST scan using FCLI and retrieves the job token.
+5. Monitors the scan status until completion.
+6. Waits for Fortify SSC to process the scan results.
+7. Uploads issues to Jira.
+8. Queries the application using FCLI to get the count of issues based on severity.
+9. Check the issue counts against predefined limits to determine if the build obtains security clearance.
 
 **Troubleshooting**
 Ensure all prerequisites are correctly installed and paths are set.
