@@ -28,7 +28,7 @@ high_issues_limit = int(config('HIGH_ISSUES_LIMIT'))
 medium_issues_limit = int(config('MEDIUM_ISSUES_LIMIT'))
 low_issues_limit = int(config('LOW_ISSUES_LIMIT'))
 
-
+'''
 # Start by creating the package
 try:
     subprocess.run(["echo", "$PATH"], shell=True, check=True)
@@ -36,7 +36,7 @@ try:
 except subprocess.CalledProcessError:
     print("Package creation failed using Scancentral")
     exit(1)
-
+'''
 # Login to SSC
 try:
     subprocess.run([fcli_path, "ssc", "session", "login", "--url", ssc_url, "-t", ssc_token], shell=True, check=True)
