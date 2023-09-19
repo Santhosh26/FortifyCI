@@ -31,7 +31,7 @@ low_issues_limit = int(config('LOW_ISSUES_LIMIT'))
 '''
 # Start by creating the package
 try:
-    subprocess.run(["echo", "$PATH"], shell=True, check=True)
+    
     subprocess.run([scancentral_path, "package", "-bt", build_tool, "-o", code_package], shell=True, check=True)
 except subprocess.CalledProcessError:
     print("Package creation failed using Scancentral")
