@@ -20,6 +20,9 @@ jira_url = config('JIRA_URL')
 jira_username = config('JIRA_USERNAME')
 jira_password = config('JIRA_PASSWORD')
 jira_project_key = config('JIRA_PROJECT_KEY')
+jira_proxy_host = config('JIRA_PROXY_HOST')
+jira_proxy_uname = config('JIRA_PROXY_UNAME')
+jira_proxy_password = config('JIRA_PROXY_PASSWORD')
 code_package=config('SCANCENTRAL_PACKAGE_O')
 build_tool=config('SCANCENTRAL_PACKAGE_BT')
 sensor_version=config('SSC_SENSOR_VERSION')
@@ -28,7 +31,7 @@ high_issues_limit = int(config('HIGH_ISSUES_LIMIT'))
 medium_issues_limit = int(config('MEDIUM_ISSUES_LIMIT'))
 low_issues_limit = int(config('LOW_ISSUES_LIMIT'))
 
-'''
+
 # Start by creating the package
 try:
     
@@ -36,7 +39,7 @@ try:
 except subprocess.CalledProcessError:
     print("Package creation failed using Scancentral")
     exit(1)
-'''
+
 # Login to SSC
 try:
     subprocess.run([fcli_path, "ssc", "session", "login", "--url", ssc_url, "-t", ssc_token], shell=True, check=True)
@@ -98,7 +101,7 @@ time.sleep(30)
 
 try:
 
-    subprocess.run(["java", "-jar",fortify_bug_utility_path, "-configFile", fortify_bug_config_file, "-SSCBaseUrl", ssc_url, "-SSCUserName", ssc_username, "-SSCPassword", ssc_password, "-SSCApplicationVersionNamePatterns", f"{ssc_appname}:{ssc_appversion_name}", "-JiraBaseUrl", jira_url, "-JiraUserName", jira_username, "-JiraPassword", jira_password, "-JiraProjectKey", jira_project_key], shell=True, check=True)
+    subprocess.run(["java", "-jar",fortify_bug_utility_path, "-configFile", fortify_bug_config_file, "-SSCBaseUrl", ssc_url, "-SSCUserName", ssc_username, "-SSCPassword", ssc_password, "-SSCApplicationVersionNamePatterns", f"{ssc_appname}:{ssc_appversion_name}", "-JiraBaseUrl", jira_url, "-JiraUserName", jira_username, "-JiraPassword", jira_password, "-JiraProxyUrl", JiraProxyHost, "" "-JiraProjectKey", jira_project_key], shell=True, check=True)
 except subprocess.CalledProcessError:
     print("Failed to execute jira integration with SSC")
     exit(1) 
