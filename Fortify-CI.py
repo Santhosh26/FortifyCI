@@ -55,7 +55,7 @@ except subprocess.CalledProcessError:
 # Upload the Package and retrieve the job token
 try:
 
-    job_output = subprocess.check_output([fcli_path, "sc-sast", "scan", "start", "--upload", "--appversion", ssc_appversion_id, "-p", code_package, "--sensor-version", sensor_version], shell=True).decode()
+    job_output = subprocess.check_output([fcli_path, "sc-sast", "scan", "start", "--upload", "--appversion", ssc_appversion_id, "-p", code_package, "--sensor-version", sensor_version]).decode()
 except subprocess.CalledProcessError:
     print("Failed to start a SAST scan using FCLI")
     exit(1)  
@@ -68,7 +68,7 @@ print("Fortify Scan Job Token:"+job_token)
 #job_token= "381b4724-01de-45b2-878c-17774bd22ee6"
 while True:
     # Check the status of the job
-    scan_status_output = subprocess.check_output([fcli_path, "sc-sast", "scan", "status", job_token], shell=True).decode()
+    scan_status_output = subprocess.check_output([fcli_path, "sc-sast", "scan", "status", job_token]).decode()
    
     # Extract statuses using regex
     lines = scan_status_output.strip().split("\n")
@@ -109,7 +109,7 @@ except subprocess.CalledProcessError:
 print("Issues have been updated to Jira Bugtracker")
 
 # Query the application using FCLI
-app_query = subprocess.check_output([fcli_path, "ssc", "appversion-vuln", "count", "--appversion", ssc_appversion_id], shell=True).decode()
+app_query = subprocess.check_output([fcli_path, "ssc", "appversion-vuln", "count", "--appversion", ssc_appversion_id]).decode()
 
 # Extract issues count for each severity
 critical_issues_count_search = re.search(r"Critical\s+(\d+)", app_query)
