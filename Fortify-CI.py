@@ -35,20 +35,20 @@ low_issues_limit = int(config('LOW_ISSUES_LIMIT'))
 # Start by creating the package
 try:
     
-    subprocess.run([scancentral_path, "package", "-bt", build_tool, "-o", code_package], shell=True, check=True)
+    subprocess.run([scancentral_path, "package", "-bt", build_tool, "-o", code_package], check=True)
 except subprocess.CalledProcessError:
     print("Package creation failed using Scancentral")
     exit(1)
 
 # Login to SSC
 try:
-    subprocess.run([fcli_path, "ssc", "session", "login", "--url", ssc_url, "-t", ssc_token], shell=True, check=True)
+    subprocess.run([fcli_path, "ssc", "session", "login", "--url", ssc_url, "-t", ssc_token], check=True)
 except subprocess.CalledProcessError:
     print("Failed to login to SSC using FCLI")
     exit(1)    
 # Login to SC-SAST
 try:
-    subprocess.run([fcli_path, "sc-sast", "session", "login", "--ssc-url", ssc_url, "-c", ssc_sast_secret, "-t", ssc_token], shell=True, check=True)
+    subprocess.run([fcli_path, "sc-sast", "session", "login", "--ssc-url", ssc_url, "-c", ssc_sast_secret, "-t", ssc_token], check=True)
 except subprocess.CalledProcessError:
     print("Failed to login to Scancentral SAST using FCLI")
     exit(1)  
@@ -101,7 +101,7 @@ time.sleep(30)
 
 try:
 
-    subprocess.run(["java", "-jar",fortify_bug_utility_path, "-configFile", fortify_bug_config_file, "-SSCBaseUrl", ssc_url, "-SSCUserName", ssc_username, "-SSCPassword", ssc_password, "-SSCApplicationVersionNamePatterns", f"{ssc_appname}:{ssc_appversion_name}", "-JiraBaseUrl", jira_url, "-JiraUserName", jira_username, "-JiraPassword", jira_password, "-JiraProxyUrl", jira_proxy_host, "-JiraProxyUserName", jira_proxy_uname, "-JiraProxyPassword", jira_proxy_password,  "-JiraProjectKey", jira_project_key], shell=True, check=True)
+    subprocess.run(["java", "-jar",fortify_bug_utility_path, "-configFile", fortify_bug_config_file, "-SSCBaseUrl", ssc_url, "-SSCUserName", ssc_username, "-SSCPassword", ssc_password, "-SSCApplicationVersionNamePatterns", f"{ssc_appname}:{ssc_appversion_name}", "-JiraBaseUrl", jira_url, "-JiraUserName", jira_username, "-JiraPassword", jira_password, "-JiraProxyUrl", jira_proxy_host, "-JiraProxyUserName", jira_proxy_uname, "-JiraProxyPassword", jira_proxy_password,  "-JiraProjectKey", jira_project_key], check=True)
 except subprocess.CalledProcessError:
     print("Failed to execute jira integration with SSC")
     exit(1) 
