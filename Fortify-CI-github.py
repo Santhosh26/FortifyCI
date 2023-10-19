@@ -16,7 +16,7 @@ ssc_username = config('SSC_USERNAME')
 ssc_password = config('SSC_PASSWORD')
 ssc_appname = config('SSC_APPNAME')
 ssc_appversion_name = config('SSC_APPVERSION_NAME')
-
+'''
 jira_url = config('JIRA_URL')
 jira_username = config('JIRA_USERNAME')
 jira_password = config('JIRA_PASSWORD')
@@ -24,7 +24,7 @@ jira_project_key = config('JIRA_PROJECT_KEY')
 jira_proxy_host = config('JIRA_PROXY_HOST')
 jira_proxy_uname = config('JIRA_PROXY_UNAME')
 jira_proxy_password = config('JIRA_PROXY_PASSWORD')
-
+'''
 fortifyvulexp_path = config ('FORTIFYVULEXP_PATH') 
 code_package=config('SCANCENTRAL_PACKAGE_O')
 build_tool=config('SCANCENTRAL_PACKAGE_BT')
@@ -109,7 +109,8 @@ except subprocess.CalledProcessError:
     print("Failed to execute jira integration with SSC")
     exit(1) 
 
-print("Issues have been updated to Jira Bugtracker")'''
+print("Issues have been updated to Jira Bugtracker")
+'''
 
 try:
     cmd = [
