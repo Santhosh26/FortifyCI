@@ -16,7 +16,7 @@ ssc_username = config('SSC_USERNAME')
 ssc_password = config('SSC_PASSWORD')
 ssc_appname = config('SSC_APPNAME')
 ssc_appversion_name = config('SSC_APPVERSION_NAME')
-'''
+
 jira_url = config('JIRA_URL')
 jira_username = config('JIRA_USERNAME')
 jira_password = config('JIRA_PASSWORD')
@@ -24,7 +24,7 @@ jira_project_key = config('JIRA_PROJECT_KEY')
 jira_proxy_host = config('JIRA_PROXY_HOST')
 jira_proxy_uname = config('JIRA_PROXY_UNAME')
 jira_proxy_password = config('JIRA_PROXY_PASSWORD')
-'''
+
 fortifyvulexp_path = config ('FORTIFYVULEXP_PATH') 
 code_package=config('SCANCENTRAL_PACKAGE_O')
 build_tool=config('SCANCENTRAL_PACKAGE_BT')
@@ -111,14 +111,20 @@ except subprocess.CalledProcessError:
 
 print("Issues have been updated to Jira Bugtracker")'''
 
-#Upload issues to Github Code security
 try:
-
-
-    subprocess.run("java", "-jar",fortifyvulexp_path, "SSCToGitHub", "--ssc.baseurl=", ssc_url, "-ssc.user=", ssc_username, "-ssc.password=", ssc_password, "--ssc.version.name=", ssc_appname, ":", ssc_appversion_name)
+    cmd = [
+        "java", "-jar", fortifyvulexp_path, "SSCToGitHub",
+        "--ssc.baseurl="+ssc_url,
+        "--ssc.user="+ssc_username,
+        "--ssc.password="+ssc_password,
+        "--ssc.version.name="+ssc_appname+":"+ssc_appversion_name
+    ]
+    print("Executing:", " ".join(cmd))
+    subprocess.run(cmd)
 except subprocess.CalledProcessError:
     print("failed to execute vulnerablity exporter")
     exit(1)
+
 
 # Query the application using FCLI
 app_query = subprocess.check_output([fcli_path, "ssc", "appversion-vuln", "count", "--appversion", ssc_appversion_id]).decode()
@@ -147,4 +153,4 @@ else:
     print("Security clearance obtained successfully.")
     exit(0)
 
- 
+
